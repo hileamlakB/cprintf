@@ -53,11 +53,11 @@ edge **prepare_lexer(void);
 
 
 /*topken_utils*/
-void update_token(printing_format *, char *, char, int);
+void update_token(printing_format *, char *, char *, int, int);
 
 /*type check*/
 char *is_id(char *);
 char *is_flag(char *);
-char *is_mod(char *);
+int is_mod(char *);
 char *is_num(char *);
 #endif /*PARSER*/

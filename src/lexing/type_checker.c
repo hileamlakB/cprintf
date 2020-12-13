@@ -43,7 +43,7 @@ char *is_flag(char *string)
 	return (NULL);
 }
 
-char *is_mod(char *format)
+int is_mod(char *format)
 {
 	char *mod = smalloc(3 * sizeof(char));
 	char mods[] = {'l', 'h', 'j', 'z', 't', 'L', '\0'};
@@ -51,18 +51,21 @@ char *is_mod(char *format)
 
 	mod[0] = format[0], mod[1] = format[1], mod[2] = '\0';
 	if (!_strcmp(mod, "ll") || !_strcmp(mod, "hh"))
-		return (mod);
+	{
+		free(mod);
+		return (2);
+	}
 	while (mods[i])
 	{
 		if (mod[0] == mods[i])
 		{
-			mod[1] = '\0';
-			return (mod);
+			free(mod);
+			return (1);
 		}
 		i++;
 	}
 	free(mod);
-	return (NULL);
+	return (0);
 }
 
 char *is_num(char *string)
@@ -78,3 +81,9 @@ char *is_num(char *string)
 	free(num_s);
 	return (NULL);
 }
+
+int is_valid(printing_format *head)
+{
+
+
+	}

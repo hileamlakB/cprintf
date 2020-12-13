@@ -137,7 +137,8 @@ edge *find_edge(edge *head, int edge_name, char *label)
 printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, int col, printing_format *head, char *current_mode)
 {
 	char *t_str = smalloc(10);
-	edge *destination = smalloc(sizeof(edge *));
+	edge *destination = smalloc(sizeof(edge));
+	int mod_len = 0;
 
 	if (current == accepting)
 		return (head);
@@ -148,7 +149,8 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 		return (NULL);
 	/* var expansion*/
 
-	if (is_mod(string))
+	mod_len = is_mod(string);
+	if (mod_len)
 		_strcpy(t_str, "MOD"), 	_strcpy(current_mode, "MOD");
 	else if (is_id(string) && current != 0)
 		_strcpy(t_str, "ID"), 	_strcpy(current_mode, "ID");
@@ -171,8 +173,10 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 	{
 		current = destination->next_state;
 		t_str[0] = string[0], t_str[1] = '\0';
+
 		free(t_str);
-		update_token(head, current_mode, string[0], col);
+
+		update_token(head, current_mode, string, col, mod_len);
 		string += 1;
 		return (fsm_sim(current, string, edges, accepting, col, head, current_mode));
 	}
@@ -184,15 +188,18 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 		{
 			current = destination->next_state;
 			t_str[0] = string[0], t_str[1] = '\0';
+
 			free(t_str);
+			/*free(destination);*/
+
 			if (string[0] != '.')
-				update_token(head, current_mode, string[0], col);
+				update_token(head, current_mode, string, col, mod_len);
 			string += 1;
 			return (fsm_sim(current, string, edges, accepting, col, head, current_mode));
 		}
-
 	}
 	free(t_str);
+	/*free(destination);*/
 	current = 0;
 	string += 1;
 	col += 1;

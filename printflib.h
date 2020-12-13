@@ -17,21 +17,23 @@ typedef unsigned int bool;
 #include <unistd.h>
 
 /**
-*struct printing_format - a struct for formating info
-*@flag: the flag used (+, -, '\0')
+*struct printing_format - a struct for formating info 
+*@flag: the flag used (+, -, '\0') (the flags used in printf)
 *@width: the space taken during printing
 *@mod: modifier (l, h)
-*@precision: how manyt points after . in case of f
+*@precision: how many points after . in case of numbers
 *@zero_fill: --
-*@replaced: the total amount the format is holding
+*@replaced: the length of the string that will be replaced after substitution
 *@validity: is this format a complete format
+*@id: format identifier (d, i, x, ...)
 *@printer: a function to handle the printing
 */
 typedef struct printing_format
 {
 	char flag;
 	int width;
-	char mod;
+	char *mod;
+	char id;
 	int precision;
 	bool zero_fill;
 	int replaced;

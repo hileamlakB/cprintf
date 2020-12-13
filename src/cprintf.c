@@ -25,7 +25,7 @@ int _printf(const char *format, ...)
 	char *t_str = NULL, *str = NULL, *str_mod = smalloc(20);
 	edge **grammer_list = prepare_lexer();
 	/*make it null here and creat it in the function*/
-	printing_format *formated_str = smalloc(sizeof(printing_format *));
+	printing_format *formated_str = smalloc(sizeof(printing_format));
 	printing_format *returned = NULL;
 	/*accepting state of the different lexer grammers at index*/
 	/*abstract this away in some function call*/
@@ -35,11 +35,11 @@ int _printf(const char *format, ...)
 	if (!format || (*format == '%' && _strlen((char *)format) == 1))
 		return (-1);
 
-	formated_str->word.tok = smalloc(100);
 	str = _strdup((char *)format);
 	t_str = str;
 
 
+	formated_str->word.tok = smalloc(100);
 
 	va_start(items, format);
 	while (true)
@@ -68,6 +68,7 @@ int _printf(const char *format, ...)
 		if (!_strlen(str))
 			break;
 		_strcpy(formated_str->word.tok, "");
+		_strcpy(str_mod, "");
 	}
 
 	free(t_str);
