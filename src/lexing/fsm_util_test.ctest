@@ -1,0 +1,21 @@
+#include "../printflib.h"
+#include <stdlib.h>
+
+int main(void)
+{
+	edge *head = NULL;
+
+	add_edge_fsm(9, &head, 0, "%", 1,
+			1, "FLAG", 2,
+			2, "NUM", 3,
+			3, "NUM", 3,
+			3, ".", 4,
+			4, "NUM", 5,
+			5, "NUM", 5,
+			5, "MOD", 6,
+			6, "ID", 7);
+	print_fsm(head);
+	free_fsm(head);
+	return (0);
+}
+
