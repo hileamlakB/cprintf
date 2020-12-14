@@ -1,7 +1,7 @@
 #include "../printflib.h"
 
 
-void update_token(printing_format *node, char *var, char *value, int col, int mod_len)
+void update_token(printing_format *node, char *var, char *value, int mod_len)
 {
 	char *values = smalloc(3);
 
@@ -28,7 +28,6 @@ void update_token(printing_format *node, char *var, char *value, int col, int mo
 		node->replaced = (int)value[0] - 48;
 	else if (!_strcmp(var,  "ID"))
 		node->id = value[0];
-	node->word.col = col;
 	_strcat(node->word.tok, values);
 	free(values);
 }

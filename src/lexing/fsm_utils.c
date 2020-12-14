@@ -134,7 +134,7 @@ edge *find_edge(edge *head, int edge_name, char *label)
 	return (_head);
 }
 
-printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, int col, printing_format *head, char *current_mode)
+printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, int started, printing_format *head, char *current_mode)
 {
 	char *t_str = smalloc(10);
 	edge *destination = smalloc(sizeof(edge));
@@ -168,22 +168,28 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 		if (string[0] == '.')
 			_strcpy(current_mode, "PRECISION");
 	}
+	started = 0;
 	destination = find_edge(edges, current, t_str);
 	if (destination)
 	{
+		started = 1;
 		current = destination->next_state;
 		t_str[0] = string[0], t_str[1] = '\0';
-
 		free(t_str);
 
-		update_token(head, current_mode, string, col, mod_len);
+		update_token(head, current_mode, string, mod_len);
 		string += 1;
-		return (fsm_sim(current, string, edges, accepting, col, head, current_mode));
+		return (fsm_sim(current, string, edges, accepting, started, head, current_mode));
 	}
 	else if (string[0] != '%' && string[0] !=' ' && current == 0)
 	{
 		_strcpy(t_str, "NOT_%");
 		destination = find_edge(edges, current, t_str);
+		if (started)
+		{
+			printf("Wrong format for printf");
+			return (NULL);
+		}
 		if (destination)
 		{
 			current = destination->next_state;
@@ -193,9 +199,9 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 			/*free(destination);*/
 
 			if (string[0] != '.')
-				update_token(head, current_mode, string, col, mod_len);
+				update_token(head, current_mode, string, mod_len);
 			string += 1;
-			return (fsm_sim(current, string, edges, accepting, col, head, current_mode));
+			return (fsm_sim(current, string, edges, accepting, started, head, current_mode));
 		}
 	}
 	free(t_str);
@@ -203,8 +209,7 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 	current = 0;
 	string += 1;
 	head->replaced = 0;
-	update_token(head, "", "", col, mod_len);
-	col += 1;
+	update_token(head, "", "", mod_len);
 	return (NULL);
 
 }

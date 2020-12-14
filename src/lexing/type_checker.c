@@ -1,7 +1,7 @@
 #include "../printflib.h"
 
 
-int *is_id(char *string)
+int is_id(char *string)
 {
 	char ids[] = {'d','i','u','o','x','X','f','F','e','E','g','G',
 		'a','A','c','s','p','n','%', 'b', 'R', 'r', 'S', '\0'};
@@ -22,7 +22,7 @@ int *is_id(char *string)
 	return (0);
 }
 
-int *is_flag(char *string)
+int is_flag(char *string)
 {
 
 	char flags[] = {' ', '0', '#', '-', '+', '\0'};
@@ -68,7 +68,7 @@ int is_mod(char *format)
 	return (0);
 }
 
-int *is_num(char *string)
+int is_num(char *string)
 {
 
 	if (string[0] <= '9' && string[0] >= '0')
@@ -99,7 +99,7 @@ bool is_valid(printing_format *head)
 			str++;
 		}
 
-	if (!is_id(head->id))
+	if (!is_id(&(head->id)))
 		{
 		head->validity = false;
 		return (false);

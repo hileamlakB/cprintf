@@ -14,7 +14,6 @@ typedef struct edge{
 typedef struct token{
 	char *type;
 	char *tok;
-	int col;
 }token;
 
 /**
@@ -40,7 +39,7 @@ typedef struct printing_format
 	int replaced;
 	bool validity;
 	token word;
-	char *(*printer)(va_list, struct printing_format *);
+	char *(*formater)(va_list, struct printing_format *);
 } printing_format;
 
 edge *add_edge_fsm(unsigned int, edge**, ...);
@@ -53,11 +52,12 @@ edge **prepare_lexer(void);
 
 
 /*topken_utils*/
-void update_token(printing_format *, char *, char *, int, int);
+void update_token(printing_format *, char *, char *, int);
 
 /*type check*/
-char *is_id(char *);
-char *is_flag(char *);
+int is_id(char *);
+int is_flag(char *);
 int is_mod(char *);
-char *is_num(char *);
+int is_num(char *);
+bool is_valid(printing_format *);
 #endif /*PARSER*/
