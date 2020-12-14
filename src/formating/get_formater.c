@@ -3,7 +3,7 @@
 typedef struct formater_func
 {
 	char id;
-	char *()(va_list, priting_format *);
+	char *(*formater)(va_list, printing_format *);
 }formater_func;
 
 
@@ -23,17 +23,26 @@ char *(*get_formater(char id))(va_list, printing_format *)
 		{'s', format_str},
 		{'d', format_int},
 		{'i', format_int},
-		{'u', format_unsigned},
-		{'b', format_binary},
-		{'o', format_octal},
-		{'x', format_hexa},
-		{'X', format_hexa},
-		{'p', format_address},
-		{'r', format_reverse},
+		{'u', format_uint},
+		{'b', format_bin},
+		{'o', format_oct},
+		{'x', format_hex},
+		{'X', format_Hex},
+		{'p', format_adress},
+		{'r', format_rts},
 		{'R', format_rot13},
-		{'S', format_},
+		{'S', format_S},
 
-		}
+	};
+	int i = 0;
+	int numofids = 13;
 
-	return (printer);
+	while (i < numofids)
+	{
+		if (funcs_list[i].id == id)
+			return (funcs_list[i].formater);
+		i++;
+	}
+
+	return (NULL);
 }

@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "../printflib.h"
 /**
  * format_bin - prints the binary representation of a number
  * @num: input integer
@@ -40,10 +40,10 @@ char *format_bin(va_list num, __attribute__((unused)) printing_format * format)
 char *format_hex(va_list num, printing_format *format)
 {
 	unsigned long int n;
-	char *nums, mod = format->mod;
+	char *nums, *mod = format->mod;
 	int i = 0, tmp;
 
-	if (mod == 'l')
+	if (mod[0] == 'l')
 		n = va_arg(num, unsigned long);
 	else
 		n = va_arg(num, unsigned int);
@@ -85,11 +85,11 @@ char *format_hex(va_list num, printing_format *format)
 char *format_Hex(va_list num, printing_format *format)
 {
 	unsigned long int n;
-	char *nums, mod = format->mod;
+	char *nums, *mod = format->mod;
 	int i = 0, tmp;
 
 
-	if (mod == 'l')
+	if (mod[0] == 'l')
 		n = va_arg(num, unsigned long);
 	else
 		n = va_arg(num, unsigned int);
@@ -135,11 +135,11 @@ char *format_Hex(va_list num, printing_format *format)
 char *format_oct(va_list num, printing_format *format)
 {
 	unsigned long int n;
-	char *nums, mod = format->mod;
+	char *nums, *mod = format->mod;
 	int i = 0, tmp;
 
 
-	if (mod == 'l')
+	if (mod[0] == 'l')
 		n = va_arg(num, unsigned long);
 	else
 		n = va_arg(num, unsigned int);

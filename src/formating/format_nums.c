@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "../printflib.h"
 
 /**
  *format_int - Print a number of any digit
@@ -8,12 +8,12 @@
  */
 char *format_int(va_list num, printing_format *format)
 {
-	char *nums, *_nums, mod = format->mod;
+	char *nums, *_nums, *mod = format->mod;
 	long int n;
 	int len, strwid;
 
 	/*since shorts are auto casted to int on appending to va_list*/
-	if (mod == 'l')
+	if (mod[0] == 'l')
 		n = va_arg(num, long);
 	else
 		n = va_arg(num, int);
@@ -59,12 +59,12 @@ char *format_int(va_list num, printing_format *format)
  */
 char *format_uint(va_list num, printing_format *format)
 {
-	char *nums, mod = format->mod, *_nums;
+	char *nums, *mod = format->mod, *_nums;
 	unsigned long int n;
 	int len, strwid;
 
 	/*since shorts are auto casted to int on appending to va_list*/
-	if (mod == 'l')
+	if (mod[0] == 'l')
 		n = va_arg(num, unsigned long);
 	else
 		n = va_arg(num, unsigned int);

@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "../printflib.h"
 /**
  * format_char - writes the character c to stdout
  * @c: an arg_list containing the character to be printed
