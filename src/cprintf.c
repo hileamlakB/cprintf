@@ -9,7 +9,6 @@ void clean_printing_format(printing_format *formated_str)
 	formated_str->precision = 0;
 	formated_str->zero_fill = false;
 	formated_str->validity = false;
-	formated_str->word.col = 0;
 
 
 }
@@ -24,7 +23,6 @@ void print_printing_format(printing_format *formated_str)
 	printf("validity=>%u\n", formated_str->validity);
 	printf("word.tok=>%s\n", formated_str->word.tok);
 	printf("word.type =>%s\n", formated_str->word.type);
-	printf("word.col =>%i\n", formated_str->word.col);
 	printf("=>-------------------------------------------\n\n\n");
 
 
@@ -70,11 +68,14 @@ int _printf(const char *format, ...)
 		while (!returned && i < 17)
 			formated_str->replaced = 0, returned = fsm_sim(0, str, grammer_list[i], accepting[i], 0, formated_str, str_mod), i += 1;
 
+		print_printing_format(formated_str);
 		str += formated_str->replaced;
 		if (is_valid(formated_str))
 		{
-			formated_str-> = get_formater(formated_str->id);
-			replaced = (formated_str->)(items);
+			formated_str->formater = get_formater(formated_str->id);
+			if (!(formated_str->formater))
+				return (0);
+			replaced = (formated_str->formater)(items, formated_str);
 			printer(replaced, 1);
 		}
 		else
