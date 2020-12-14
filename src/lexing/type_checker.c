@@ -1,7 +1,7 @@
 #include "../printflib.h"
 
 
-char *is_id(char *string)
+int *is_id(char *string)
 {
 	char ids[] = {'d','i','u','o','x','X','f','F','e','E','g','G',
 		'a','A','c','s','p','n','%', 'b', 'R', 'r', 'S', '\0'};
@@ -13,16 +13,16 @@ char *is_id(char *string)
 	{
 		if (ids[i] == string[0])
 		{
-			id_s[0] = ids[i];
-			return (id_s);
+			free(id_s);
+			return (1);
 		}
 		i++;
 	}
 	free(id_s);
-	return (NULL);
+	return (0);
 }
 
-char *is_flag(char *string)
+int *is_flag(char *string)
 {
 
 	char flags[] = {' ', '0', '#', '-', '+', '\0'};
@@ -34,13 +34,13 @@ char *is_flag(char *string)
 	{
 		if (flags[i] == string[0])
 		{
-			flag_s[0] = flags[i];
-			return (flag_s);
+			free(flag_s);
+			return (1);
 		}
 		i++;
 	}
 	free(flag_s);
-	return (NULL);
+	return (0);
 }
 
 int is_mod(char *format)
@@ -68,22 +68,44 @@ int is_mod(char *format)
 	return (0);
 }
 
-char *is_num(char *string)
+int *is_num(char *string)
 {
-	char *num_s = smalloc(2);
 
-	num_s[1] = '\0';
 	if (string[0] <= '9' && string[0] >= '0')
-	{
-		num_s[0] = string[0];
-		return (num_s);
-	}
-	free(num_s);
-	return (NULL);
+		return (1);
+	return (0);
 }
 
-int is_valid(printing_format *head)
+bool is_valid(printing_format *head)
 {
 
+	char *str = head->word.tok;
 
+	if (!head)
+		return (false);
+
+	/*flag, width and precision are optional*/
+	/*on the case of precision should be handled incase
+	a . is used but no precision*/
+
+	if (!head->precision)
+		while (*str)
+		{
+			if (*str == '.')
+			{
+				head->validity = false;
+				return (false);
+			}
+			str++;
+		}
+
+	if (!is_id(head->id))
+		{
+		head->validity = false;
+		return (false);
 	}
+	head->validity = true;
+	return (true);
+}
+
+
