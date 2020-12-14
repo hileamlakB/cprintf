@@ -3,6 +3,6 @@
 
 int main(void)
 {
-	_printf("%+3.5lfn");
+	_printf("%+5.5lin\n", 45);
 	return (0);
 }

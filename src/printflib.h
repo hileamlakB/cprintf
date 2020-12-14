@@ -25,37 +25,29 @@ int printer(char *, int);
 /* parsing */
 
 /*printer functions*/
-char *_putchar(va_list, printing_format *);
-char *_putstr(va_list, printing_format *);
-char *_putint(va_list, printing_format *);
-char *_putuint(va_list, printing_format *);
-char *_putbin(va_list, printing_format *);
-char *_puthex(va_list, printing_format *);
-char *_putoct(va_list, printing_format *);
-char *_putHex(va_list, printing_format *);
-char *_putadress(va_list, printing_format *);
-char *_putrts(va_list, printing_format *);
-char *_putrot13(va_list, printing_format *);
-char *_putS(va_list, printing_format *);
+char *format_char(va_list, printing_format *);
+char *format_str(va_list, printing_format *);
+char *format_int(va_list, printing_format *);
+char *format_uint(va_list, printing_format *);
+char *format_bin(va_list, printing_format *);
+char *format_hex(va_list, printing_format *);
+char *format_oct(va_list, printing_format *);
+char *format_Hex(va_list, printing_format *);
+char *format_adress(va_list, printing_format *);
+char *format_rts(va_list, printing_format *);
+char *format_rot13(va_list, printing_format *);
+char *format_S(va_list, printing_format *);
 
 /*printf and its helpers*/
 int _printf(const char *format, ...);
 printing_format *parse_format(const char *);
-int buf_push(char *, int *, char *);
-int *print(const char *, va_list, int *, char *);
-
-/*validity checker*/
-bool is_valid_id(char);
-int checkflag(printing_format *, char);
-int checkwidth(printing_format *, const char *);
-int checkprecision(printing_format *, const char *);
-int checkmod(printing_format *, const char *);
+int printer(char *, int);
 
 /*parser to identify printing format*/
 printing_format *parse_format(const char *);
 
 /*printer identifier*/
-char *(*get_printer(char id))(va_list, printing_format *);
+char *(*get_formater(char id))(va_list, printing_format *);
 
 /*num_utils*/
 int _pow(unsigned int, int);

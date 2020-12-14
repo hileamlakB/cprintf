@@ -1,5 +1,5 @@
 #include "../printflib.h"
-
+#include <stdio.h>
 /*
  ******Author
  * Hileamlak M. Yitayew
