@@ -180,7 +180,7 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 		string += 1;
 		return (fsm_sim(current, string, edges, accepting, col, head, current_mode));
 	}
-	else if (string[0] != '%' && string[0] !=' ')
+	else if (string[0] != '%' && string[0] !=' ' && current == 0)
 	{
 		_strcpy(t_str, "NOT_%");
 		destination = find_edge(edges, current, t_str);
@@ -202,6 +202,8 @@ printing_format *fsm_sim(int current, char *string, edge *edges, int accepting, 
 	/*free(destination);*/
 	current = 0;
 	string += 1;
+	head->replaced = 0;
+	update_token(head, "", "", col, mod_len);
 	col += 1;
 	return (NULL);
 
